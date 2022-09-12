@@ -1,0 +1,117 @@
+import org.w3c.dom.ls.LSOutput;
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class Test {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        char a[][]=new char[3][3];
+        int again=1;
+        while(again==1) {
+            System.out.println("Lets Play Tic-Tac-Toe");
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    a[i][j] = '.';
+                }
+            }
+            boolean flag = true;
+            int count = 0;
+            br:
+            while (count < 9) {
+                int x = sc.nextInt();
+                int y = sc.nextInt();
+                x--;
+                y--;
+                if (isValid(a, x, y)) {
+                    if (flag) {
+                        a[x][y] = 'O';
+                    } else {
+                        a[x][y] = 'X';
+                    }
+                    if (isWin(a, x, y)) {
+                        if (a[x][y] == 'O') {
+                            System.out.println("Player 1 Won");
+                        } else {
+                            System.out.println("Player 2 Won");
+                        }
+                        break br;
+                    }
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            System.out.print(a[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                    flag = !flag;
+                    count++;
+                } else {
+                    System.out.println("Already occupied or out of range..please Re-Enter");
+                }
+            }
+            if (count == 9) {
+                System.out.println("Its a Tie");
+            }
+            System.out.println("Wanna Play Again");
+            System.out.println("1 for Yes and 0 for No");
+            again=sc.nextInt();
+        }
+    }
+    public static boolean isValid(char a[][],int x,int y)
+    {
+        if(x<0||x>2||y<0||y>2||a[x][y]!='.')
+        {
+            return false;
+        }
+        return true;
+    }
+    public static boolean isWin(char a[][],int x,int y)
+    {
+        char ch=a[x][y];
+        boolean flag=true;
+        for(int i=0;i<=2;i++)
+        {
+            if(ch!=a[x][i])
+            {
+                flag=false;
+                break;
+            }
+        }
+        if(flag)
+            return true;
+        flag=true;
+        for(int i=0;i<=2;i++)
+        {
+            if(ch!=a[i][y])
+            {
+                flag=false;
+                break;
+            }
+        }
+        if(flag)
+            return true;
+        flag=true;
+        for(int i=2;i>=0;i--)
+        {
+            if(ch!=a[i][2-i])
+            {
+                flag=false;
+                break;
+            }
+        }
+        if(flag)
+            return true;
+        flag=true;
+        for(int i=0;i<=2;i++)
+        {
+            if(ch!=a[i][i])
+            {
+                flag=false;
+                break;
+            }
+        }
+        if(flag)
+            return true;
+        return false;
+    }
+}
